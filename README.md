@@ -1,0 +1,1 @@
+# React project using webpack + typescript + scss + jest

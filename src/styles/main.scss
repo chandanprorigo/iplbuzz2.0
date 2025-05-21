@@ -1,0 +1,33 @@
+@use "sass:map";
+
+$breakpoints: (
+  "small": 480px,
+  "medium": 768px,
+  "large": 1024px,
+  "xlarge": 1280px
+);
+
+@mixin respond-to($breakpoint) {
+  @media (max-width: map.get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+.container {
+  padding: 2rem;
+  background-color: lightblue;
+
+  h1 {
+    font-size: 2rem;
+
+    @include respond-to("medium") {
+      font-size: 1.5rem;
+      color: darkblue;
+    }
+
+    @include respond-to("small") {
+      font-size: 1.2rem;
+      color: darkgreen;
+    }
+  }
+}
