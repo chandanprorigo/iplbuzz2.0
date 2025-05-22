@@ -1,1 +1,1 @@
-# React project using webpack + typescript + scss + jest
+# React project using Webpack + Typescript + SCSS + Jest + ReactTestingLibrary
