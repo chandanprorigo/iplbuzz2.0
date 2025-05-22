@@ -63,20 +63,20 @@
   color: #1a202c;
 }
 
-.squad-list {
+.team-squad-list {
   width: 100%;
   max-width: 360px;
-  margin: auto;
+  margin: auto 10px;
 }
 
-.squad-item {
+.team-squad-item {
   display: flex;
   align-items: center;
   padding: 0.5rem 0;
   border-bottom: 1px solid #ddd;
 }
 
-.squad-item:last-child {
+.team-squad-item:last-child {
   border-bottom: none;
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Highcharts from "highcharts";
+import 'highcharts/modules/accessibility';
 import HighchartsReact from "highcharts-react-official";
 
 interface PlayerRankings {
@@ -48,6 +49,10 @@ const PlayerBarChart: React.FC<PlayerBarChartProps> = ({ playerData, name }) => 
     title: {
       text: `${name} - Best Career Rankings`,
     },
+    accessibility: {
+      enabled: true,
+      description: `${name} - Best Career Rankings`
+    },
     xAxis: {
       categories: [
         "Test Bat",
@@ -57,6 +62,9 @@ const PlayerBarChart: React.FC<PlayerBarChartProps> = ({ playerData, name }) => 
         "T20 All-round",
       ],
       title: { text: null },
+      accessibility: {
+        description: `categories`
+      }
     },
     yAxis: {
       min: 0,
@@ -64,6 +72,9 @@ const PlayerBarChart: React.FC<PlayerBarChartProps> = ({ playerData, name }) => 
         text: "Ranking Position",
         align: "high",
       },
+       accessibility: {
+        description: `Ranking Position`
+      }
     },
     tooltip: {
       valueSuffix: " rank",

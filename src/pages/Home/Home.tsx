@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDataContext } from "../../contexts/DataContextProvider";
-import { convertStatsToChartData, getTeamStats, TeamStats as StatsRecord } from "../../common/functions";
+import {
+  convertStatsToChartData,
+  getTeamStats,
+  TeamStats as StatsRecord,
+} from "../../common/functions";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import "highcharts/modules/accessibility";
 import { useNavigate } from "react-router-dom";
 import "./Home.scss";
 
@@ -16,28 +21,43 @@ interface TeamStats {
 const Home: React.FC = () => {
   const { data } = useDataContext();
   const [allTeams, setAllTeams] = useState<TeamStats[]>([]);
-  const [chartOptions, setChartOptions] = useState<Highcharts.Options | null>(null);
+  const [chartOptions, setChartOptions] = useState<Highcharts.Options | null>(
+    null
+  );
   const [selectedCard, setSelectedCard] = useState<number>(0);
   const navigate = useNavigate();
 
-  const updateChartOptions = (chartData: { categories: string[]; series: Highcharts.SeriesOptionsType[] }) => {
+  const updateChartOptions = (chartData: {
+    categories: string[];
+    series: Highcharts.SeriesOptionsType[];
+  }) => {
     setChartOptions({
+      title: {
+        text: "Team Performance Overview",
+      },
       chart: {
         type: "column",
         height: 800,
       },
-      title: {
-        text: "Team Performance Overview",
+      accessibility: {
+        enabled: true,
+        description: "A chart describing some data.",
       },
       xAxis: {
         categories: chartData.categories,
         title: { text: "Teams" },
+        accessibility: {
+          description: "Team X axis"
+        }
       },
       yAxis: {
         min: 0,
         title: {
           text: "Number of Matches",
         },
+         accessibility: {
+          description: "Number of Matches Y axis"
+        }
       },
       legend: {
         align: "center",
@@ -70,28 +90,34 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-container">
-      <div className="team-cards">
+      <section className="team-cards" aria-label="Team statistics">
         {allTeams.map((card, index) => (
-          <div
+          <button
             key={index}
+            type="button"
             className={`team-card ${selectedCard === index ? "selected" : ""}`}
             onClick={() => {
               setSelectedCard(index);
               handleTeamClick(card.team);
             }}
+            aria-pressed={selectedCard === index}
+            aria-label={`Select ${card.team} team card. Played ${card.played}, won ${card.wins}, lost ${card.losses}`}
           >
             <h2>{card.team}</h2>
             <p>Total played: {card.played}</p>
             <p>Total wins: {card.wins}</p>
             <p>Total losses: {card.losses}</p>
-          </div>
+          </button>
         ))}
-      </div>
+      </section>
 
       {chartOptions && (
-        <div className="chart-container">
+        <section
+          className="chart-container"
+          aria-label="Team performance chart"
+        >
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-        </div>
+        </section>
       )}
     </div>
   );

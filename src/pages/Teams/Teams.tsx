@@ -6,6 +6,7 @@ import "./Teams.scss";
 import { teamSquad } from "../../data/team-squad";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import 'highcharts/modules/accessibility';
 import { Link } from "react-router-dom";
 
 interface Player {
@@ -39,41 +40,48 @@ const Teams: FC = () => {
     if (data?.length) {
       const stats = summarizeTeamStats(data);
       const currentTeam = stats.find((stat: TeamStats) => stat.team === name);
+      console.log(currentTeam)
       setCurrentTeamStats(currentTeam);
     }
   }, [data, name]);
 
   const renderTeamCards = () => (
-    <div className="card-grid">
+    <div className="card-grid" aria-labelledby="Team statistics cards">
       {currentTeamStats?.data?.map((card: any, index: number) => (
-        <div
+        <button
+          type="button"
           key={index}
           className={`team-card ${selectedCard === index ? "selected" : ""}`}
           onClick={() => {
             setSelectedCard(index);
             teamCardHandler(card);
           }}
+          aria-pressed={selectedCard === index}
+          aria-label={`${currentTeamStats.team}`}
         >
           <h3>{card.year}</h3>
           <p>Total played - {card.played}</p>
           <p>Total wins - {card.wins}</p>
           <p>Total losses - {card.losses}</p>
-        </div>
+        </button>
       ))}
     </div>
   );
 
   const renderTeamContainer = () => (
     <div className="team-container">
-      <div className="team-column">
+      <section className="team-column" aria-labelledby={name}>
         <div className="team-box">
-          <h2>{name} Squad</h2>
-          {renderTeamSquad()}
+          <h2 id={`${name} Squad`}>{name} Squad</h2>
+          {renderTeamSquad(name)}
         </div>
-      </div>
-      <div className="team-column">
+      </section>
+      <section
+        className="team-column"
+        aria-label={`${name} statistics  pie chart}`}
+      >
         <div className="team-box">{renderTeamPieChartByYear()}</div>
-      </div>
+      </section>
     </div>
   );
 
@@ -81,11 +89,15 @@ const Teams: FC = () => {
     navigate(`/player/${player}`);
   };
 
-  const renderTeamSquad = () => (
-    <ul className="team-squad-list">
+  const renderTeamSquad = (name: string | undefined) => (
+    <ul className="team-squad-list" aria-label={`${name} players list`}>
       {teamPlayers.map((player, index) => (
         <li key={index} className="team-squad-item">
-          <Link to={`/players/${player.player}`} className="player-link">
+          <Link
+            to={`/players/${player.player}`}
+            className="player-link"
+            aria-label={`View Detail for ${player.player}`}
+          >
             {player.player}
           </Link>
         </li>
@@ -138,11 +150,11 @@ const Teams: FC = () => {
   }, [currentTeamStats?.data?.length]);
 
   return (
-    <>
-      <h1 className="team-title">{name}</h1>
+    <section aria-labelledby="team-title">
+      <h1 id="team-title" className="team-title">{name}</h1>
       {renderTeamCards()}
       {renderTeamContainer()}
-    </>
+    </section>
   );
 };
 

@@ -120,20 +120,24 @@ const PlayerProfileCard: React.FC = () => {
   );
 
   const renderTabs = () => (
-    <div className="tabs">
+    <section className="tabs" aria-labelledby='Player statistics'>
       <button
+        type='button'
         className={tab === 0 ? 'active' : ''}
         onClick={() => handleTabChange(0)}
+        aria-label='Player Profile'
       >
         Profile
       </button>
       <button
+        type='button'
         className={tab === 1 ? 'active' : ''}
         onClick={() => handleTabChange(1)}
+        aria-label='Player Rankings'
       >
         Rankings
       </button>
-    </div>
+    </section>
   );
 
   const renderProfileTab = () => (
@@ -144,8 +148,8 @@ const PlayerProfileCard: React.FC = () => {
 
   const renderRankingTab = () => (
     <TabPanel value={tab} index={1}>
-      <div className="ranking-grid">
-        <div className="ranking-item">
+      <section className="ranking-grid" aria-labelledby='Player ranking details'>
+        <section className="ranking-item" aria-labelledby='Player rankings'>
           <h3>Batting Rankings</h3>
           <p>Test Rank: {playerStats.rankings.bat.testRank} (Best: {playerStats.rankings.bat.testBestRank})</p>
           <p>ODI Rank: {playerStats.rankings.bat.odiRank} (Best: {playerStats.rankings.bat.odiBestRank})</p>
@@ -156,11 +160,11 @@ const PlayerProfileCard: React.FC = () => {
 
           <h3>All-round Rankings</h3>
           <p>T20 Best Rank: {playerStats.rankings.all.t20BestRank}</p>
-        </div>
-        <div className="ranking-item">
+        </ section>
+        <section className="ranking-item" aria-label='Player rankings chart'>
           <PlayerBarChart playerData={playerStats} name={searchTerm || ''} />
-        </div>
-      </div>
+        </section>
+      </section>
     </TabPanel>
   );
 
