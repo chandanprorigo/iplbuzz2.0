@@ -6,6 +6,7 @@ import { convertStatsToChartData, getTeamStats } from '../../../common/functions
 
 jest.mock('../../../contexts/DataContextProvider');
 jest.mock('../../../common/functions');
+jest.mock('highcharts/modules/accessibility', () => jest.fn());
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: jest.fn(),

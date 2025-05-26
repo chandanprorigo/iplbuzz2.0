@@ -6,7 +6,7 @@ jest.mock('../../api/axios');
 
 const mockedApi = api as jest.Mocked<typeof api>;
 
-describe('playerService', () => {
+describe('player Service', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
