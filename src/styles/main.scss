@@ -22,12 +22,14 @@ $breakpoints: (
 
     @include respond-to("medium") {
       font-size: 1.5rem;
-      color: darkblue;
     }
 
     @include respond-to("small") {
       font-size: 1.2rem;
-      color: darkgreen;
     }
+  }
+
+  h3 {
+    font-size: 1.5rem;
   }
 }
