@@ -30,7 +30,7 @@ const GoogleTranslate = () => {
     };
   }, []);
 
-  return <div id="google_translate_element"></div>;
+  return <div id="google_translate_element" className='google_translate_element'></div>;
 };
 
 export default GoogleTranslate;

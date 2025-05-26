@@ -3,6 +3,7 @@ import './Nav.scss';
 import { FC } from 'react';
 import GoogleTranslate from '../common/LanguageSelector/GoogleTranlate';
 import ApiTranslate from '../fundamentals/ApiTranslate';
+import LanguageSwitcher from '../../utils/locales/i18n/LanguageSwitcher/LanguageSwitcher';
 
 const Nav : FC = () => {
   return (
@@ -15,8 +16,11 @@ const Nav : FC = () => {
         <li className="nav-item">
           <Link className="nav-link" to="/">IPLBUZZ 2.0</Link>
         </li>
-        <li className='nav-item'>
-          <GoogleTranslate />
+         <li className="nav-item nav-right-group">
+          <div className="nav-right">
+            <GoogleTranslate />
+            <LanguageSwitcher />
+          </div>
         </li>
       </ul>
     </nav>

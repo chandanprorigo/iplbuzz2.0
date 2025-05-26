@@ -11,13 +11,25 @@
     .nav-list {
         list-style: none;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         margin: 0;
         padding: 0;
+        align-items: center;
     }
 
     .nav-item {
         margin: 0 15px;
+
+        &.nav-right-group {
+            margin-left: auto;
+
+            .nav-right {
+            display: flex;
+            gap: 1rem;
+            flex-direction: row;
+            justify-content: space-between;
+            }
+        }
 
         .nav-link {
             text-decoration: none;
@@ -28,6 +40,8 @@
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
+
+          
 
         .nav-link:hover {
             background-color: #555;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDataContext } from "../../contexts/DataContextProvider";
 import {
   convertStatsToChartData,
@@ -10,6 +10,7 @@ import Highcharts from "highcharts";
 import "highcharts/modules/accessibility";
 import { useNavigate } from "react-router-dom";
 import "./Home.scss";
+import { useTranslation } from "react-i18next";
 
 interface TeamStats {
   team: string;
@@ -26,14 +27,15 @@ const Home: React.FC = () => {
   );
   const [selectedCard, setSelectedCard] = useState<number>(0);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
-  const updateChartOptions = (chartData: {
+  const updateChartOptions = useCallback((chartData: {
     categories: string[];
     series: Highcharts.SeriesOptionsType[];
   }) => {
     setChartOptions({
       title: {
-        text: "Team Performance Overview",
+        text: t("Team Performance Overview"),
       },
       chart: {
         type: "column",
@@ -45,7 +47,7 @@ const Home: React.FC = () => {
       },
       xAxis: {
         categories: chartData.categories,
-        title: { text: "Teams" },
+        title: { text: t("Teams") },
         accessibility: {
           description: "Team X axis"
         }
@@ -53,7 +55,7 @@ const Home: React.FC = () => {
       yAxis: {
         min: 0,
         title: {
-          text: "Number of Matches",
+          text: t("Number of Matches"),
         },
          accessibility: {
           description: "Number of Matches Y axis"
@@ -65,7 +67,7 @@ const Home: React.FC = () => {
       },
       series: chartData.series,
     });
-  };
+  }, [t]);
 
   const getTeamsStatsArray = (stats: StatsRecord): TeamStats[] =>
     Object.entries(stats).map(([team, s]) => ({
@@ -82,7 +84,7 @@ const Home: React.FC = () => {
       const chartData = convertStatsToChartData(stats);
       updateChartOptions(chartData);
     }
-  }, [data]);
+  }, [data, updateChartOptions]);
 
   const handleTeamClick = (team: string) => {
     navigate(`/teams/${encodeURIComponent(team)}`);
