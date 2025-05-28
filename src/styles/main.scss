@@ -1,17 +1,4 @@
-@use "sass:map";
-
-$breakpoints: (
-  "small": 480px,
-  "medium": 768px,
-  "large": 1024px,
-  "xlarge": 1280px
-);
-
-@mixin respond-to($breakpoint) {
-  @media (max-width: map.get($breakpoints, $breakpoint)) {
-    @content;
-  }
-}
+@use "./mixins" as *;
 
 .container {
   padding: 2rem;
@@ -50,6 +37,7 @@ select, .google_translate_element {
   background-position: right 0.75rem center;
   background-size: 8px 10px;
   min-width: 160px;
+  padding: 0px 5px;
 }
 
 select:hover,.google_translate_element:hover,.google_translate_element:focus
