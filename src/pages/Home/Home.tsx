@@ -33,6 +33,13 @@ const Home: React.FC = () => {
     categories: string[];
     series: Highcharts.SeriesOptionsType[];
   }) => {
+    const translatedSeries = chartData.series.map((series) => ({
+      ...series,
+      name: t(series.name as string),
+    }));
+    const translatedCategories = chartData.categories.map((category) =>
+      t(category as string)
+    );
     setChartOptions({
       title: {
         text: t("Team Performance Overview"),
@@ -46,7 +53,7 @@ const Home: React.FC = () => {
         description: "A chart describing some data.",
       },
       xAxis: {
-        categories: chartData.categories,
+        categories: translatedCategories,
         title: { text: t("Teams") },
         accessibility: {
           description: "Team X axis"
@@ -65,7 +72,7 @@ const Home: React.FC = () => {
         align: "center",
         verticalAlign: "bottom",
       },
-      series: chartData.series,
+      series: translatedSeries,
     });
   }, [t]);
 
@@ -105,10 +112,10 @@ const Home: React.FC = () => {
             aria-pressed={selectedCard === index}
             aria-label={`Select ${card.team} team card. Played ${card.played}, won ${card.wins}, lost ${card.losses}`}
           >
-            <h2>{card.team}</h2>
-            <p>Total played: {card.played}</p>
-            <p>Total wins: {card.wins}</p>
-            <p>Total losses: {card.losses}</p>
+            <h2>{t(`${card.team}`)}</h2>
+            <p>{t("Total Played")}: {card.played}</p>
+            <p>{t("Total Wins")}: {card.wins}</p>
+            <p>{t("Total Losses")}: {card.losses}</p>
           </button>
         ))}
       </section>
