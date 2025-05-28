@@ -8,6 +8,7 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import 'highcharts/modules/accessibility';
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface Player {
   player: string;
@@ -35,6 +36,7 @@ const Teams: FC = () => {
     title: { text: "" },
     series: [{ name: "", data: [] }],
   });
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (data?.length) {
@@ -60,9 +62,9 @@ const Teams: FC = () => {
           aria-label={`${currentTeamStats.team}`}
         >
           <h3>{card.year}</h3>
-          <p>Total played - {card.played}</p>
-          <p>Total wins - {card.wins}</p>
-          <p>Total losses - {card.losses}</p>
+          <p>{t("Total Played")} - {card.played}</p>
+          <p>{t("Total Wins")} - {card.wins}</p>
+          <p>{t("Total Losses")} - {card.losses}</p>
         </button>
       ))}
     </div>
@@ -72,7 +74,7 @@ const Teams: FC = () => {
     <div className="team-container">
       <section className="team-column" aria-labelledby={name}>
         <div className="team-box">
-          <h2 id={`${name} Squad`}>{name} Squad</h2>
+          <h2 id={`${name} Squad`}>{t(`${name}`)} {t("Squad")}</h2>
           {renderTeamSquad(name)}
         </div>
       </section>
